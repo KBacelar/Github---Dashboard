@@ -123,7 +123,7 @@ export const Dashboard: React.FC = () => {
             <div className="stats-grid">
               <StatCard title="Stars" value={repo.stargazers_count} icon={Star} />
               <StatCard title="Forks" value={repo.forks_count} icon={GitFork} />
-              <StatCard title="Watchers" value={repo.watchers_count} icon={Eye} />
+              <StatCard title="Watchers" value={repo.subscribers_count} icon={Eye} />
             </div>
 
             <div className="charts-container">

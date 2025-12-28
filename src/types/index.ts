@@ -6,6 +6,7 @@ export interface Repository {
   stargazers_count: number;
   forks_count: number;      
   watchers_count: number;  
+  subscribers_count: number;
   language: string;
   html_url: string;
   owner: {

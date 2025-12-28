@@ -8,12 +8,14 @@ const api = axios.create({
 export const githubService = {
   getRepository: async (term: string = ''): Promise<Repository | null> => {
     try {
+      // Se não tiver termo, busca o React direto (já traz detalhes completos)
       if (!term) {
         const response = await api.get('/repos/facebook/react');
         return response.data;
       }
 
-      const response = await api.get('/search/repositories', {
+      // Se tiver termo, faz a busca
+      const searchResponse = await api.get('/search/repositories', {
         params: {
           q: term,
           sort: 'stars',
@@ -21,7 +23,19 @@ export const githubService = {
           per_page: 1,
         },
       });
-      return response.data.items[0] || null;
+
+      // Se não achou nada na busca, retorna null
+      if (!searchResponse.data.items || searchResponse.data.items.length === 0) {
+        return null;
+      }
+
+      const foundRepo = searchResponse.data.items[0];
+
+      // TRUQUE: A busca não traz o subscribers_count correto.
+      // Então, pegamos o nome do repo encontrado e fazemos uma chamada de detalhes:
+      const detailsResponse = await api.get(`/repos/${foundRepo.owner.login}/${foundRepo.name}`);
+      
+      return detailsResponse.data; // Retorna os dados completos e corrigidos
     } catch (error) {
       console.error('Erro ao buscar repositório:', error);
       return null;
