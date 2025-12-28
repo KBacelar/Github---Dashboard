@@ -26,13 +26,13 @@ src/
 
 Durante o desenvolvimento, algumas decisões foram tomadas para atender aos requisitos:
 
-1. Repositório Inicial
+1. Repositório Inicial:
 O desafio solicitava exibir o repositório mais popular do GitHub ao iniciar. Como os repositórios com mais estrelas geralmente são apenas listas de links (sem commits de código), optei por carregar o repositório "facebook/react" como padrão caso a busca venha vazia. Isso permite que a interface demonstre os gráficos de commits corretamente desde o primeiro acesso.
 
-2. Modo Escuro (Dark Mode)
+2. Modo Escuro (Dark Mode):
 Utilizei variáveis CSS nativas para o gerenciamento de temas. Isso evita a necessidade de bibliotecas adicionais de estilo, mantendo o bundle da aplicação mais leve e performático.
 
-3. Tratamento de Erros
+3. Tratamento de Erros:
 A aplicação implementa feedback visual para estados de carregamento e erros de requisição, além de tratar casos onde o repositório existe mas não possui histórico de commits recente.
 
 ## Como Rodar Localmente
