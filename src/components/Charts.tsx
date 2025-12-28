@@ -14,6 +14,7 @@ const COLORS = [
   '#8b5cf6'  // Roxo
 ];
 
+// --- Gráfico de Commits ---
 interface CommitChartProps {
   data: WeeklyCommitActivity[];
 }
@@ -43,12 +44,23 @@ export const CommitChart: React.FC<CommitChartProps> = ({ data }) => {
   );
 };
 
+// --- Gráfico de Linguagens ---
 interface LanguageChartProps {
   data: LanguageData;
 }
 
 export const LanguageChart: React.FC<LanguageChartProps> = ({ data }) => {
   const totalBytes = Object.values(data).reduce((acc, curr) => acc + curr, 0);
+
+  // PROTEÇÃO: Evita quebra visual se não houver linguagens (ex: repositórios só de texto)
+  if (totalBytes === 0) {
+    return (
+      <div className="chart-box" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+        <h3 style={{ marginBottom: '20px', fontWeight: 'bold', alignSelf: 'flex-start' }}>Linguagens</h3>
+        <p style={{ color: 'var(--text-secondary)' }}>Não há dados de linguagem disponíveis.</p>
+      </div>
+    );
+  }
 
   const chartData = Object.entries(data).map(([name, value]) => ({
     name,
@@ -75,9 +87,11 @@ export const LanguageChart: React.FC<LanguageChartProps> = ({ data }) => {
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
+          
+          {/* CORREÇÃO DO ERRO DE DEPLOY AQUI */}
           <Tooltip 
              contentStyle={{ backgroundColor: 'var(--bg-card)', borderColor: 'var(--border-color)', color: 'var(--text-primary)' }}
-             formatter={(value: number, name: string, props: any) => [`${props.payload.percent}%`, name]}
+             formatter={(_value: any, name: any, props: any) => [`${props.payload.percent}%`, name]}
           />
         </PieChart>
       </ResponsiveContainer>

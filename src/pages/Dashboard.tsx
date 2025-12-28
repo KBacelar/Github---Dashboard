@@ -25,13 +25,14 @@ export const Dashboard: React.FC = () => {
   const fetchData = async (term: string = '') => {
     setLoading(true);
     setError('');
-    setRepo(null); 
     
     try {
+      // 1. Busca o repositório
       const repoData = await githubService.getRepository(term);
       
       if (!repoData) {
         setError('Repositório não encontrado.');
+        setRepo(null);
         setLoading(false);
         return;
       }
@@ -46,8 +47,9 @@ export const Dashboard: React.FC = () => {
       setLanguages(langsData);
       setCommits(commitsData);
     } catch (err) {
-      setError('Erro ao carregar dados. Verifique sua conexão ou o limite da API.');
+      setError('Erro ao carregar dados. Verifique o nome do repositório.');
       console.error(err);
+      setRepo(null);
     } finally {
       setLoading(false);
     }
@@ -61,8 +63,6 @@ export const Dashboard: React.FC = () => {
     e.preventDefault(); 
     fetchData(searchTerm);
   };
-
-  const hasCommits = commits.reduce((acc, curr) => acc + curr.total, 0) > 0;
 
   return (
     <div className={`min-h-screen ${darkMode ? 'dark' : ''}`}>
@@ -97,7 +97,10 @@ export const Dashboard: React.FC = () => {
         </div>
 
         {loading && <p style={{ textAlign: 'center', marginTop: '20px' }}>Carregando dados...</p>}
-        {error && <p style={{ color: '#ef4444', textAlign: 'center', marginTop: '20px' }}>{error}</p>}
+        
+        {!loading && error && (
+           <p style={{ color: '#ef4444', textAlign: 'center', marginTop: '20px' }}>{error}</p>
+        )}
 
         {!loading && repo && (
           <>
@@ -127,26 +130,17 @@ export const Dashboard: React.FC = () => {
             </div>
 
             <div className="charts-container">
-              {/* Só exibe o gráfico se houver commits > 0 */}
-              {hasCommits ? (
-                <CommitChart data={commits} />
-              ) : (
-                <div className="chart-box" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: 'var(--text-secondary)', gap: '10px' }}>
-                  <GitFork size={40} style={{ opacity: 0.5 }} />
-                  <p>Sem atividade de commits recente.</p>
-                </div>
-              )}
-              
+              <CommitChart data={commits} />
               <LanguageChart data={languages} />
             </div>
           </>
         )}
+        
         <footer style={{ marginTop: '4rem', padding: '2rem 0', textAlign: 'center', borderTop: '1px solid var(--border-color)' }}>
           <p style={{ margin: 0, color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
-            Kayo Bacelar | Desafio Técnico
+             Kayo Bacelar | Desafio Técnico
           </p>
         </footer>
-        {/* -------------------------------- */}
       </div>
     </div>
   );
