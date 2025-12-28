@@ -1,0 +1,158 @@
+:root {
+  --bg-page: #f3f4f6;
+  --bg-card: #ffffff;
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --border-color: #e5e7eb;
+  --input-bg: #ffffff;
+  --chart-grid: #e5e7eb;
+}
+
+.dark {
+  --bg-page: #111827;
+  --bg-card: #1f2937;
+  --text-primary: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --border-color: #374151;
+  --input-bg: #374151;
+  --chart-grid: #374151;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.min-h-screen {
+  min-height: 100vh;
+  background-color: var(--bg-page);
+  color: var(--text-primary);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.repo-header {
+  background: var(--bg-card);
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.repo-title a {
+  text-decoration: none;
+  color: var(--text-primary);
+}
+
+.header { margin-bottom: 2rem; }
+
+.header h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--text-primary);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.card {
+  background: var(--bg-card);
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.card-icon {
+  padding: 0.75rem;
+  background-color: #eff6ff;
+  border-radius: 9999px;
+  color: #2563eb;
+}
+
+.dark .card-icon {
+  background-color: #1e3a8a;
+  color: #60a5fa;
+}
+
+.card-info h3 {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.card-info p {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.charts-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .charts-container { grid-template-columns: 2fr 1fr; }
+}
+
+.chart-box {
+  background: var(--bg-card);
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  min-height: 300px;
+}
+
+.chart-box h3 {
+  color: var(--text-primary);
+}
+
+.recharts-text {
+  fill: var(--text-primary) !important;
+}
+
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line {
+  stroke: var(--chart-grid);
+}
+
+input {
+  background-color: var(--input-bg);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-toggle:hover {
+  background-color: var(--border-color);
+}
