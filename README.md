@@ -1,73 +1,42 @@
-# React + TypeScript + Vite
+# GitHub Dashboard - Desafio Técnico
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aplicação de dashboard desenvolvida para visualização de métricas de repositórios do GitHub. O projeto foi criado como parte de um teste técnico, com foco em organização de arquitetura, TypeScript e UX/UI.
 
-Currently, two official plugins are available:
+## Tecnologias Utilizadas
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+O projeto foi inicializado com o template Vite, utilizando React e TypeScript para garantir tipagem estática e melhor manutenibilidade.
 
-## React Compiler
+- React e TypeScript
+- Axios para consumo da API do GitHub
+- Recharts para visualização de dados (gráficos)
+- Lucide React para ícones
+- CSS Variables para implementação do tema escuro (Dark Mode)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Estrutura do Projeto
 
-## Expanding the ESLint configuration
+O código foi estruturado para separar responsabilidades e facilitar a escalabilidade:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+src/
+├── components/   # Componentes visuais reutilizáveis
+├── pages/        # Páginas da aplicação
+├── services/     # Configuração de API e requisições HTTP
+└──types/        # Definições de interfaces TypeScript
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Decisões de Projeto
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Durante o desenvolvimento, algumas decisões foram tomadas para atender aos requisitos:
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+1. Repositório Inicial
+O desafio solicitava exibir o repositório mais popular do GitHub ao iniciar. Como os repositórios com mais estrelas geralmente são apenas listas de links (sem commits de código), optei por carregar o repositório "facebook/react" como padrão caso a busca venha vazia. Isso permite que a interface demonstre os gráficos de commits corretamente desde o primeiro acesso.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2. Modo Escuro (Dark Mode)
+Utilizei variáveis CSS nativas para o gerenciamento de temas. Isso evita a necessidade de bibliotecas adicionais de estilo, mantendo o bundle da aplicação mais leve e performático.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+3. Tratamento de Erros
+A aplicação implementa feedback visual para estados de carregamento e erros de requisição, além de tratar casos onde o repositório existe mas não possui histórico de commits recente.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Como Rodar Localmente
+
+1. Clone o repositório
+2. Instale as dependências com: npm install
+3. Inicie o servidor: npm run dev
